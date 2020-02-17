@@ -19,11 +19,11 @@ router.post("/register-user",
         check('email', 'Email is required')
             .not()
             .isEmpty(),
-        check('PasswordValidation.password', 'Password should be between 8 to 20 characters long')
+        check('password', 'Password should be between 8 to 20 characters long')
             .not()
             .isEmpty()
             .isLength({ min: 8, max: 20 }),
-        check('PasswordValidation.repeatpassword', 'RepeatPassword should be between 8 to 20 characters long')
+        check('repeatpassword', 'RepeatPassword should be between 8 to 20 characters long')
             .not()
             .isEmpty()
             .isLength({ min: 8, max: 20 }),
@@ -38,8 +38,8 @@ router.post("/register-user",
             return res.status(422).jsonp(errors.array());
         }
         else {
-            if (req.body.PasswordValidation.password === req.body.PasswordValidation.repeatpassword) {
-                bcrypt.hash(req.body.PasswordValidation.password, 10).then((hash) => {
+            if (req.body.password === req.body.repeatpassword) {
+                bcrypt.hash(req.body.password, 10).then((hash) => {
                     const user = new userSchema({
                         name: req.body.name,
                         email: req.body.email,
